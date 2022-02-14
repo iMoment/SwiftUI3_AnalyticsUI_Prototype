@@ -21,23 +21,53 @@ struct HomeView: View {
             TabView(selection: $currentTab) {
                 
                 Text("Home")
-                    .tag("home")
+                    .modifier(BGModifier())
+                    .tag("house")
                 
                 Text("Graph")
-                    .tag("graph")
+                    .modifier(BGModifier())
+                    .tag("chart.xyaxis.line")
                 
                 Text("Chat")
-                    .tag("chat")
+                    .modifier(BGModifier())
+                    .tag("message")
                 
                 Text("Settings")
-                    .tag("settings")
+                    .modifier(BGModifier())
+                    .tag("gearshape")
             }
             
             // MARK: Custom Tab Bar...
             HStack(spacing: 40) {
                 TabButton(image: "house")
                 TabButton(image: "chart.xyaxis.line")
+                
+                // MARK: Center Add Button...
+                Button {
+                    
+                } label: {
+                    Image(systemName: "plus")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundColor(Color.white)
+                        .padding(22)
+                        .background(
+                            Circle()
+                                .fill(Color("tabPurple"))
+                                .shadow(color: Color("tabPurple").opacity(0.15), radius: 5, x: 0, y: 8)
+                        )
+                }
+                .offset(y: -20)
+                .padding(.horizontal, -15)
+                
+                TabButton(image: "message")
+                TabButton(image: "gearshape")
             }
+            .padding(.top, -10)
+            .frame(maxWidth: .infinity)
+            .background(
+                Color("background")
+                    .ignoresSafeArea()
+            )
         }
     }
     
@@ -63,5 +93,14 @@ struct HomeView: View {
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
         HomeView()
+    }
+}
+
+// MARK: Background modifier
+struct BGModifier: ViewModifier {
+    func body(content: Content) -> some View {
+        content
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+            .background(Color("background").ignoresSafeArea())
     }
 }
