@@ -8,99 +8,57 @@
 import SwiftUI
 
 struct HomeView: View {
-    @State var currentTab = "house"
-    
-    init() {
-        UITabBar.appearance().isHidden = true
-    }
     
     var body: some View {
-        // Tab View
-        VStack(spacing: 0) {
+        ScrollView(.vertical, showsIndicators: false) {
             
-            TabView(selection: $currentTab) {
+            VStack(spacing: 18) {
                 
-                Text("Home")
-                    .modifier(BGModifier())
-                    .tag("house")
-                
-                Text("Graph")
-                    .modifier(BGModifier())
-                    .tag("chart.xyaxis.line")
-                
-                Text("Chat")
-                    .modifier(BGModifier())
-                    .tag("message")
-                
-                Text("Settings")
-                    .modifier(BGModifier())
-                    .tag("gearshape")
-            }
-            
-            // MARK: Custom Tab Bar...
-            HStack(spacing: 40) {
-                TabButton(image: "house")
-                TabButton(image: "chart.xyaxis.line")
-                
-                // MARK: Center Add Button...
-                Button {
+                HStack {
                     
-                } label: {
-                    Image(systemName: "plus")
-                        .font(.system(size: 20, weight: .bold))
-                        .foregroundColor(Color.white)
-                        .padding(22)
-                        .background(
-                            Circle()
-                                .fill(Color("tabPurple"))
-                                .shadow(color: Color("tabPurple").opacity(0.15), radius: 5, x: 0, y: 8)
-                        )
+                    VStack(alignment: .leading, spacing: 8) {
+                        
+                        Text("Weekly icons")
+                            .font(.title.bold())
+                        
+                        Text("Reports are available!")
+                            .fontWeight(.semibold)
+                            .foregroundColor(Color.gray)
+                    }
+                    
+                    Spacer(minLength: 10)
+                    
+                    Button {
+                        
+                    } label: {
+                        Image(systemName: "bell")
+                            .font(.title2)
+                            .foregroundColor(Color.gray)
+                            .overlay(
+                                Text("2")
+                                    .font(.caption2.bold())
+                                    .foregroundColor(Color.white)
+                                    .padding(8)
+                                    .background(Color.red)
+                                    .clipShape(Circle())
+                                    .offset(x: 11, y: -12),
+                                alignment: .topTrailing
+                            )
+                            .offset(x: -2)
+                            .padding(15)
+                            .background(Color.white)
+                            .clipShape(Circle())
+                    }
                 }
-                .offset(y: -20)
-                .padding(.horizontal, -15)
-                
-                TabButton(image: "message")
-                TabButton(image: "gearshape")
+                // MARK: Graph View
             }
-            .padding(.top, -10)
-            .frame(maxWidth: .infinity)
-            .background(
-                Color("background")
-                    .ignoresSafeArea()
-            )
-        }
-    }
-    
-    @ViewBuilder
-    func TabButton(image: String) -> some View {
-        Button {
-            withAnimation {
-                currentTab = image
-            }
-        } label: {
-            Image(systemName: image)
-                .resizable()
-//                .renderingMode(.template)
-                .aspectRatio(contentMode: .fit)
-                .frame(width: 25, height: 25)
-                .foregroundColor(
-                    currentTab == image ? Color.black : Color.gray.opacity(0.8)
-                )
+            .padding()
         }
     }
 }
 
 struct HomeView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
-    }
-}
-
-// MARK: Background modifier
-struct BGModifier: ViewModifier {
-    func body(content: Content) -> some View {
-        content
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color("background").ignoresSafeArea())
+        ContentView()
     }
 }
