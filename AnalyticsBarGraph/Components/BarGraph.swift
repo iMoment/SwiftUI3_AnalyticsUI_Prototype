@@ -60,8 +60,7 @@ struct BarGraph: View {
     func GraphView() -> some View {
         GeometryReader { proxy in
             
-            HStack {
-                
+            ZStack {
                 VStack(spacing: 0) {
                     
                     ForEach(getGraphLines(), id: \.self) { line in
@@ -71,39 +70,54 @@ struct BarGraph: View {
                             Text("\(Int(line))")
                                 .font(.caption)
                                 .foregroundColor(Color.gray)
+                                .frame(height: 20)
                             
                             Rectangle()
                                 .fill(Color.gray.opacity(0.2))
                                 .frame(height: 1)
                         }
+                        .frame(maxHeight: .infinity, alignment: .bottom)
+                        .offset(y: -15)
                     }
                 }
                 
-                ForEach(downloads) { download in
+                HStack {
                     
-                    VStack(spacing: 0) {
+                    ForEach(downloads) { download in
                         
-                        VStack(spacing: 5) {
-                            Capsule()
-                                .fill(Color("lightBlue"))
+                        VStack(spacing: 0) {
                             
-                            Capsule()
-                                .fill(Color("darkOrange"))
+                            VStack(spacing: 5) {
+                                Capsule()
+                                    .fill(Color("lightBlue"))
+                                
+                                Capsule()
+                                    .fill(Color("darkOrange"))
+                            }
+                            .frame(width: 8)
+                            .frame(height: getBarHeight(point: download.downloads, size: proxy.size))
+                            
+                            Text(download.weekDay)
+                                .font(.caption)
+                                .frame(height: 25, alignment: .bottom)
                         }
-                        .frame(width: 8)
-                        
-                        Text(download.weekDay)
-                            .font(.caption)
-                            .frame(height: 25)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
                     }
-                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+                    
                 }
-                
+                .padding(.leading, 30)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-            .padding(.leading, 30)
         }
         .frame(height: 190)
+    }
+    
+    func getBarHeight(point: CGFloat, size: CGSize) -> CGFloat {
+        let max = getMax()
+        // 25 text height, 5 spacing
+        let height = (point / max) * (size.height - 37)
+        
+        return height
     }
     
     // MARK: Sample graph lines based on max value

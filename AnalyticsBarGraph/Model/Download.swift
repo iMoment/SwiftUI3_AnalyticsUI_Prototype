@@ -19,6 +19,6 @@ var downloads: [Download] = [
     Download(downloads: 350, weekDay: "Wed"),
     Download(downloads: 430, weekDay: "Thu"),
     Download(downloads: 690, weekDay: "Fri"),
-    Download(downloads: 920, weekDay: "Sat"),
-    Download(downloads: 750, weekDay: "Sun"),
+    Download(downloads: 540, weekDay: "Sat"),
+    Download(downloads: 920, weekDay: "Sun"),
 ]
