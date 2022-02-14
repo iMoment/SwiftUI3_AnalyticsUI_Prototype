@@ -51,6 +51,7 @@ struct HomeView: View {
                     }
                 }
                 // MARK: Graph View
+                BarGraph(downloads: downloads)
             }
             .padding()
         }
